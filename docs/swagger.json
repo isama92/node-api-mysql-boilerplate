@@ -1,0 +1,802 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Store Support API",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://5nv76dhds6.execute-api.eu-west-1.amazonaws.com/staging/support/v1"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Faq",
+      "description": "Frequently asked questions endpoints"
+    },
+    {
+      "name": "Tickets",
+      "description": "Tickets endpoints"
+    }
+  ],
+  "paths": {
+    "/faq": {
+      "get": {
+        "tags": [
+          "Faq"
+        ],
+        "summary": "Retrieve a preview of all the FAQs",
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAQPreview"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faq/{faqId}": {
+      "get": {
+        "tags": [
+          "Faq"
+        ],
+        "summary": "Retrieve a single FAQ",
+        "parameters": [
+          {
+            "name": "faqId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A FAQ details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAQ"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faq/search": {
+      "get": {
+        "tags": [
+          "Faq"
+        ],
+        "summary": "Search among FAQs",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAQSearch"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/departments": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Retrieve the support departments list for both guests and authenticated users",
+        "responses": {
+          "200": {
+            "description": "A list of departments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAQDepartments"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ticket": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Creates a new support ticket for both guests and authenticated users",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Ticket"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/tickets": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "All user tickets preview",
+        "description": "Retrieve an overview with all the user tickets",
+        "responses": {
+          "200": {
+            "description": "All tickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketsPreview"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tickets/{ticketId}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Retrieve ticket details",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All tickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/TicketPreview"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TicketDetails"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tickets/{ticketId}/comment": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Create a new ticket comment",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/tickets/{ticketId}/comments/{commentId}": {
+      "put": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Rate a ticket comment",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rating": {
+                    "$ref": "#/components/schemas/rating"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "timestamp": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "rating": {
+        "type": "number",
+        "enum": [
+          1,
+          2,
+          3
+        ]
+      },
+      "FAQdepartmentId": {
+        "type": "string",
+        "description": "Department id is used as hash for anchor scroll navigation"
+      },
+      "FAQdepartmentMenuTitle": {
+        "type": "string",
+        "description": "Sidebar menu department title"
+      },
+      "FAQTitle": {
+        "type": "string",
+        "description": "Faq title"
+      },
+      "FAQId": {
+        "type": "string",
+        "description": "Faq id"
+      },
+      "TicketId": {
+        "type": "string",
+        "description": "Ticket id"
+      },
+      "TicketSubject": {
+        "type": "string",
+        "description": "Ticket subject input by the user"
+      },
+      "TicketDepartment": {
+        "type": "string",
+        "description": "Ticket department label."
+      },
+      "TicketStatus": {
+        "type": "object",
+        "description": "Ticket status",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Text displayed in the status badge. If not provided, code will be displayed."
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "IN_CHARGE",
+              "RESOLVED"
+            ],
+            "description": "This is to style the status badge. If unknown code is provided it defaults to a grey style."
+          }
+        }
+      },
+      "FAQ": {
+        "type": "object",
+        "properties": {
+          "department": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/FAQdepartmentId"
+              },
+              "menuTitle": {
+                "$ref": "#/components/schemas/FAQdepartmentMenuTitle"
+              }
+            }
+          },
+          "title": {
+            "$ref": "#/components/schemas/FAQTitle"
+          },
+          "__html": {
+            "type": "string",
+            "description": "HTML content of the FAQ"
+          }
+        },
+        "example": {
+          "department": {
+            "id": "my-area",
+            "menuTitle": "Area personale"
+          },
+          "title": "Come utilizzare la tua area personale",
+          "__html": "<p class=\"MuiTypography-root MuiTypography-body1\">  La richiesta deve essere effettuata distintamente per ciascun familiare</p><ul>  <li>Leggi le modalità operative di rimborso che trovi nella sezione \"Documentazione integrativa\"</li>  <li>Compila i campi richiesti e allega i documenti necessari.</li>  <li>Il nostro servizio provvederà alla validazione del rimborso entro dieci giorni lavorativi dall'inserimento della tua richiesta. In caso di richiesta di documentazione integrativa, il nostro servizio di assistenza avrà cura di contattarti via ticket.</li>  <li>L'importo ti verrà accreditato in busta paga, a partire dal mese successivo a quello di validazione, compatibilmente con i tempi di elaborazione dei cedolini paga. Ti invieremo una email a seguito dell'avvenuta validazione e potrai verificare lo stato di avanzamento della tua richiesta nell'area account del portale.</li></ul>"
+        }
+      },
+      "FAQPreview": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/FAQdepartmentId"
+            },
+            "menuTitle": {
+              "$ref": "#/components/schemas/FAQdepartmentMenuTitle"
+            },
+            "title": {
+              "type": "string",
+              "description": "Department description title"
+            },
+            "faq": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "$ref": "#/components/schemas/FAQTitle"
+                  },
+                  "id": {
+                    "$ref": "#/components/schemas/FAQId"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "example": [
+          {
+            "menuTitle": "Gestione del piano welfare",
+            "title": "Informazioni utili per la gestione del piano welfare",
+            "id": "welfare",
+            "faq": [
+              {
+                "title": "Come utilizzare il credito",
+                "id": "1"
+              },
+              {
+                "title": "Prodotti con bollino Celeste - Art. 51",
+                "id": "2"
+              },
+              {
+                "title": "Beneficiari del piano welfare",
+                "id": "3"
+              },
+              {
+                "title": "Prodotti con bollino Rosa - Art. 51 c.3",
+                "id": "4"
+              },
+              {
+                "title": "Prodotti con bollino Verde - Art. 100",
+                "id": "5"
+              }
+            ]
+          },
+          {
+            "menuTitle": "Area personale",
+            "title": "La tua area privata",
+            "id": "my-area",
+            "faq": [
+              {
+                "title": "Come visualizzo gli ordini effettuati",
+                "id": "1"
+              },
+              {
+                "title": "Come aggiungere anagrafica familiari",
+                "id": "2"
+              },
+              {
+                "title": "Ticket di assistenza",
+                "id": "3"
+              },
+              {
+                "title": "Come modifico i dati personali",
+                "id": "4"
+              },
+              {
+                "title": "Modalità di Evasione",
+                "id": "5"
+              }
+            ]
+          },
+          {
+            "menuTitle": "Rimborsi",
+            "title": "Gestione dei rimborsi",
+            "id": "refund",
+            "faq": [
+              {
+                "title": "Gestione rimborsi1",
+                "id": "1"
+              },
+              {
+                "title": "Gestione rimborsi2",
+                "id": "2"
+              },
+              {
+                "title": "Gestione rimborsi3",
+                "id": "3"
+              },
+              {
+                "title": "Gestione rimborsi4",
+                "id": "4"
+              },
+              {
+                "title": "Gestione rimborsi5",
+                "id": "5"
+              }
+            ]
+          }
+        ]
+      },
+      "FAQSearch": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/FAQdepartmentId"
+            },
+            "menuTitle": {
+              "$ref": "#/components/schemas/FAQdepartmentMenuTitle"
+            },
+            "title": {
+              "type": "string",
+              "description": "Department description title"
+            },
+            "faq": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "$ref": "#/components/schemas/FAQTitle"
+                  },
+                  "id": {
+                    "$ref": "#/components/schemas/FAQId"
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "FAQ text preview. Can be any length."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "example": [
+          {
+            "id": "1",
+            "title": "Come faccio ad aumentare i miei crediti?",
+            "text": "Accedi alla tua area personale, inserisci il numero di carta di credito e seleziona quanti soldi vuoi caricare sul conto DoubleYou"
+          },
+          {
+            "id": "2",
+            "title": "È possibile usare voucher scaduti?",
+            "text": "Purtroppo non è possibile recuperare i voucher scaduti. Se sei in possesso di voucher scaduti chiedi al tuo referenze aziendale di procedere al rinnovo"
+          }
+        ]
+      },
+      "FAQDepartments": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "description": "Department label"
+            },
+            "value": {
+              "type": "string",
+              "description": "Department id"
+            }
+          }
+        },
+        "example": [
+          {
+            "label": "Informazioni piano welfare",
+            "value": "welfare"
+          },
+          {
+            "label": "Rimborsi",
+            "value": "refund"
+          },
+          {
+            "label": "Voucher - Difficoltà di utilizzo",
+            "value": "voucher-1"
+          },
+          {
+            "label": "Voucher - Difficoltà di acquisto",
+            "value": "voucher-1"
+          },
+          {
+            "label": "Cancellazione ordine",
+            "value": "canceling"
+          }
+        ]
+      },
+      "Ticket": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "telephone",
+          "company",
+          "subject",
+          "department",
+          "comment"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/TicketSubject"
+          },
+          "department": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "purchaseId": {
+            "type": "string"
+          },
+          "reCAPTCHA": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "John Housecoat",
+          "email": "john.housecoat@gmail.com",
+          "telephone": "+91 224 7250342",
+          "company": "Welfare.it",
+          "subject": "Oggetto della richiesta",
+          "department": "Rimborsi",
+          "comment": "Testo della richiesta",
+          "purchaseId": "ORD20041501107811",
+          "reCAPTCHA": "123456"
+        }
+      },
+      "TicketPreview": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/TicketId"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/TicketSubject"
+          },
+          "department": {
+            "$ref": "#/components/schemas/TicketDepartment"
+          },
+          "createdAt": {
+            "$ref": "#/components/schemas/timestamp"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TicketStatus"
+          }
+        }
+      },
+      "TicketDetails": {
+        "type": "object",
+        "properties": {
+          "history": {
+            "type": "array",
+            "description": "Ticket comments history",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "RECEIVED",
+                    "SENT"
+                  ]
+                },
+                "createdAt": {
+                  "$ref": "#/components/schemas/timestamp"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "rating": {
+                  "$ref": "#/components/schemas/rating"
+                },
+                "attachments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "format": {
+                        "type": "string",
+                        "description": "File extension e.g. pdf, doc, xlsx...",
+                        "example": "pdf"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "example": [
+              {
+                "id": "1",
+                "type": "RECEIVED",
+                "createdAt": "2020-12-22T14:48:00.000Z",
+                "username": "Assistente",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pulvinar tellus nibh, a ullamcorper dui fringilla nec. Duis posuere augue quis mattis tempor. Phasellus convallis pulvinar nisl sit amet semper.",
+                "attachments": [
+                  {
+                    "format": "pdf",
+                    "url": "http://all-your-files.com/filename.pdf"
+                  }
+                ]
+              },
+              {
+                "id": "2",
+                "type": "SENT",
+                "createdAt": "2020-12-22T14:02:00.000Z",
+                "username": "John Housecoat",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pulvinar tellus nibh, a ullamcorper dui fringilla nec. Duis posuere augue quis mattis tempor. Phasellus convallis pulvinar nisl sit amet semper."
+              },
+              {
+                "id": "3",
+                "type": "RECEIVED",
+                "createdAt": "2020-12-21T14:48:00.000Z",
+                "username": "Assistente",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pulvinar tellus nibh, a ullamcorper dui fringilla nec. Duis posuere augue quis mattis tempor. Phasellus convallis pulvinar nisl sit amet semper.",
+                "attachments": [
+                  {
+                    "format": "pdf",
+                    "url": "http://all-your-files.com/filename.pdf"
+                  }
+                ],
+                "rating": 1
+              }
+            ]
+          }
+        }
+      },
+      "TicketsPreview": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TicketPreview"
+        },
+        "example": [
+          {
+            "id": "1",
+            "subject": "Oggetto della richiesta",
+            "department": "Rimborsi",
+            "createdAt": "2020-12-22T14:48:00.000",
+            "status": {
+              "label": "PRESO IN CARICO",
+              "code": "IN_CHARGE"
+            }
+          },
+          {
+            "id": "123456779",
+            "subject": "Oggetto della richiesta",
+            "department": "Rimborsi",
+            "createdAt": "2020-12-22T14:48:00.000",
+            "status": {
+              "label": "RISOLTO",
+              "code": "RESOLVED"
+            }
+          },
+          {
+            "id": "123456789",
+            "subject": "Oggetto della richiesta Oggetto della richiesta",
+            "department": "Rimborsi",
+            "createdAt": "2020-12-22T14:48:00.000",
+            "status": {
+              "label": "UNKNWON CODE",
+              "code": "UNKNOWN"
+            }
+          },
+          {
+            "id": "123456799",
+            "subject": "Oggetto della richiesta Oggetto della richiesta",
+            "department": "Rimborsi",
+            "createdAt": "2020-12-22T14:48:00.000",
+            "status": {
+              "code": "UNKNOWN LABEL AND CODE"
+            }
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

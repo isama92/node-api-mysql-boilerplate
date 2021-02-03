@@ -5,3 +5,9 @@ exports.status = (req, res) => {
         .status(httpStatus.OK)
         .json({ status: 'OK' });
 };
+
+exports.test = async (req, res) => {
+    return res
+        .status(httpStatus.OK)
+        .json({ test: true });
+};
