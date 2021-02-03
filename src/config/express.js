@@ -20,7 +20,7 @@ const app = express();
 /** Middlewares */
 
 // logs
-app.use(morgan(logs));
+app.use(morgan(logs.type, logs.options));
 
 // parse json body
 app.use(bodyParser.json());
@@ -35,16 +35,14 @@ app.use(xss());
 // set responses' headers (improved security)
 app.use(helmet());
 
+// cors
 if (isDev) {
     app.use(cors({ origin: clientUrl }));
 } else {
     // TODO: non dev CORS
 }
 
-
-
-/** Routes */
-
+// routes
 app.use('/', routes);
 
 
