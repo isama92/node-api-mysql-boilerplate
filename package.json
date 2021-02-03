@@ -29,7 +29,8 @@
     "http-status": "^1.5.0",
     "morgan": "^1.10.0",
     "pm2": "^4.5.4",
-    "validator": "^13.5.2"
+    "validator": "^13.5.2",
+    "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "eslint": "^7.19.0",

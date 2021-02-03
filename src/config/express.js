@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const cors = require('cors');
 const helmet = require('helmet');
+const xss = require('xss-clean');
 const routes = require('../routes');
 const {
     isDev, clientUrl, logs,
@@ -27,6 +28,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // add responses' gzip compression
 app.use(compression());
+
+// sanitize input
+app.use(xss());
 
 // set responses' headers (improved security)
 app.use(helmet());
