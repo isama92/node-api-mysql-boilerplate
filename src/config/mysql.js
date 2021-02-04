@@ -6,11 +6,9 @@ const sequelize = new Sequelize(wm2DbUri, {
     logging: (msg) => logger.info(msg),
 });
 
-try {
-    sequelize.authenticate();
-    logger.debug('Connection has been established successfully.');
-} catch (error) {
-    logger.error('Unable to connect to the database:', error);
-}
+sequelize
+    .authenticate()
+    .then(() => logger.debug('Connected to the DB.'))
+    .catch((err) => logger.error('Unable to connect to the database:', err));
 
 module.exports = sequelize;
