@@ -1,8 +1,8 @@
 {
-    "name": "wm2-api-assistance",
+    "name": "node-api-mysql-boilerplate",
     "version": "1.0.0",
-    "description": "Api wm2-m3 assistance",
-    "author": "Double You",
+    "description": "Node Api Mysql Boilerplate",
+    "author": "Stefano Borzoni <isama92@gmail.com>",
     "main": "index.js",
     "private": true,
     "engines": {
@@ -23,7 +23,7 @@
         "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up"
     },
     "keywords": [],
-    "license": "ISC",
+    "license": "MIT",
     "dependencies": {
         "axios": "^0.21.1",
         "bluebird": "^3.7.2",

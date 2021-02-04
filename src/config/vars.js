@@ -12,7 +12,7 @@ if (isDev) {
 
 const port = process.env.PORT || 3000;
 const clientUrl = process.env.CLIENT_URL;
-const wm2DbUri = process.env.WM2_DB_URI;
+const dbUri = process.env.DB_URI;
 
 const logs = {
     type: isDev ? 'dev' : 'combined',
@@ -23,7 +23,7 @@ module.exports = {
     nodeEnv,
     port,
     clientUrl,
-    wm2DbUri,
+    dbUri,
 
     isDev,
     isStag,
