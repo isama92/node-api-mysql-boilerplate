@@ -1,0 +1,7 @@
+{
+    "hooks": {
+        "post-checkout": "npm i",
+        "pre-commit": "lint-staged",
+        "post-commit": "gst"
+    }
+}
