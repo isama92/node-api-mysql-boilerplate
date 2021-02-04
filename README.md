@@ -1,4 +1,4 @@
-# WM2 Api Assistance
+# Node Api Mysql Boilerplate
 
 ### TODO
 - Cors

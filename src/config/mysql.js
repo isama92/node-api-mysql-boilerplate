@@ -1,8 +1,8 @@
 const { Sequelize } = require('sequelize');
-const { wm2DbUri } = require('./vars');
+const { dbUri } = require('./vars');
 const logger = require('./winston');
 
-const sequelize = new Sequelize(wm2DbUri, {
+const sequelize = new Sequelize(dbUri, {
     logging: (msg) => logger.info(msg),
 });
 
