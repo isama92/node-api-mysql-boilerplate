@@ -1,0 +1,6 @@
+version: "3.7"
+
+services:
+    node-app:
+        container_name: wm2_api_assistance_test
+        command: npm test

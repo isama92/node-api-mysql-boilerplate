@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+    node-app:
+        build: .
+        image: wm2_api_assistance
+        ports:
+            - 3000:3000
+        volumes:
+            - .:/usr/src/node-app

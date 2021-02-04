@@ -1,0 +1,7 @@
+version: "3.7"
+
+services:
+    node-app:
+        container_name: wm2_api_assistance_staging
+        command: npm run staging
+        env_file: .env

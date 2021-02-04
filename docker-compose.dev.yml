@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+    node-app:
+        container_name: wm2_api_assistance_dev
+        command: npm run dev
+        networks:
+            - services
+
+networks:
+    services:
+        external: true
