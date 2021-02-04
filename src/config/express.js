@@ -6,16 +6,10 @@ const cors = require('cors');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const routes = require('../routes');
-const {
-    isDev, clientUrl, logs,
-} = require('./vars');
-
-
+const { isDev, clientUrl, logs } = require('./vars');
 
 // Express instance
 const app = express();
-
-
 
 /** Middlewares */
 
@@ -44,7 +38,5 @@ if (isDev) {
 
 // routes
 app.use('/', routes);
-
-
 
 module.exports = app;

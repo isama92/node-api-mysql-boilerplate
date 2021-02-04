@@ -1,7 +1,9 @@
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-const accessLogStream = fs.createWriteStream(path.join(__dirname, '..', '..', 'logs', 'access.log'), {flags: 'a'});
+
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+const accessLogStream = fs.createWriteStream(path.join(__dirname, '..', '..', 'logs', 'access.log'), { flags: 'a' });
 
 const nodeEnv = process.env.NODE_ENV;
 const port = process.env.PORT || 3000;
@@ -14,8 +16,8 @@ const isProd = nodeEnv === 'production';
 
 const logs = {
     type: isDev ? 'dev' : 'combined',
-    options: isDev? {} : {stream: accessLogStream},
-}
+    options: isDev ? {} : { stream: accessLogStream },
+};
 
 module.exports = {
     nodeEnv,

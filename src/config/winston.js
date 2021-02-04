@@ -5,46 +5,34 @@ const options = {
     combined: {
         level: 'info',
         filename: 'logs/combined.log',
-        format: winston.format.combine(
-            winston.format.timestamp(),
-            winston.format.json()
-        ),
+        format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
         maxsize: 5242880, // 5MB
         maxFiles: 5,
     },
     error: {
         level: 'error',
         filename: 'logs/error.log',
-        format: winston.format.combine(
-            winston.format.timestamp(),
-            winston.format.json()
-        ),
+        format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
         handleExceptions: true,
         maxsize: 5242880, // 5MB
         maxFiles: 5,
     },
     console: {
         level: 'debug',
-        format: winston.format.combine(
-            winston.format.colorize(),
-            winston.format.timestamp(),
-            winston.format.simple(),
-        ),
-        handleExceptions: true
+        format: winston.format.combine(winston.format.colorize(), winston.format.timestamp(), winston.format.simple()),
+        handleExceptions: true,
     },
 };
 
+// eslint-disable-next-line new-cap
 const logger = new winston.createLogger({
     level: 'info',
     format: winston.format.json(),
-    transports: [
-        new winston.transports.File(options.combined),
-        new winston.transports.File(options.error),
-    ],
-    exitOnError: false
+    transports: [new winston.transports.File(options.combined), new winston.transports.File(options.error)],
+    exitOnError: false,
 });
 
-if(isDev) {
+if (isDev) {
     logger.add(new winston.transports.Console(options.console));
 }
 

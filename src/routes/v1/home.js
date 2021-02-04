@@ -1,6 +1,6 @@
 const express = require('express');
-const controller = require('../../controllers/home');
 const swaggerUi = require('swagger-ui-express');
+const controller = require('../../controllers/home');
 const swaggerDocument = require('../../../docs/swagger.json');
 const onlyDev = require('../../middlewares/onlyDev');
 
