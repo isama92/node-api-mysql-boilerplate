@@ -1,7 +1,7 @@
 .idea/
 node_modules/
 logs/
-#coverage/
+coverage/
 
 .env*
 !.env*.example

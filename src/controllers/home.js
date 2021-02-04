@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const User = require('../models/user');
+const { User } = require('../models');
 
 exports.status = (req, res) => {
     return res.status(httpStatus.OK).json({ status: 'OK' });
