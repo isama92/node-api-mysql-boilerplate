@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const User = require('../models/user');
 
 exports.status = (req, res) => {
     return res
@@ -7,7 +8,8 @@ exports.status = (req, res) => {
 };
 
 exports.test = async (req, res) => {
+    const user = await User.findByPk(1);
     return res
         .status(httpStatus.OK)
-        .json({ test: true });
+        .json({ test: user });
 };
